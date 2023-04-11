@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  opistream:
+    container_name: opistream
+    image: opisek/opistream
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:80
+    environment:
+      - PORT=80
+    restart: unless-stopped
