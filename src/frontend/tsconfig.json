@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "es6",
+        "target": "es6",
+        "allowJs": true,
+        "noImplicitAny": true,
+        "outDir": "./dist/js",
+        "removeComments": true,
+        "strict": true
+    },
+    "incluede": [
+        "*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
