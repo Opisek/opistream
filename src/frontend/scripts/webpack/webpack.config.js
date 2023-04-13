@@ -5,6 +5,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import ImageMinimizerPlugin from "image-minimizer-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 
 import { rootDir, distDir, htmlDir } from "../paths.js";
 
@@ -20,43 +21,42 @@ export default (htmlFiles) => ({
         rules: [
             {
                 test: /\.ejs$/i,
-                exclude: /node_modules/,
                 use: ["html-loader", "webp-everywhere", "template-ejs-loader"]
             },
             {
                 test: /\.css$/i,
-                exclude: /node_modules/,
                 type: "asset/resource",
-                generator : {
-                    filename : "css/[contenthash][ext]"
-                }
+                generator : { filename : "css/[contenthash][ext]" }
+            },
+            {
+                test: /\.js$/i,
+                exclude: [ /node_modules/, /entry\.js$/ ],
+                type: "asset/resource",
+                generator : { filename : "js/[contenthash].js" }
             },
             {
                 test: /\.ts$/i,
                 exclude: /node_modules/,
                 type: "asset/resource",
-                use: "ts-loader",
-                generator : {
-                    filename : "js/[contenthash].js"
-                }
+                use: [ "remove-typescript-module", "ts-loader" ],
+                generator : { filename : "js/[contenthash].js" }
             },
             {
                 test: /\.(png|jpe?g|webp|gif|svg|)$/i,
-                exclude: /node_modules/,
                 type: "asset",
-                generator : {
-                    filename : "images/[contenthash][ext]"
-                }
+                generator : { filename : "images/[contenthash][ext]" }
             }
         ]
     },
     resolveLoader: {
         alias: {
-            "webp-everywhere": resolve(dirname(fileURLToPath(import.meta.url)), "./WebpEverywhere.cjs")
+            "webp-everywhere": resolve(dirname(fileURLToPath(import.meta.url)), "./loaders/WebpEverywhere.cjs"),
+            "remove-typescript-module": resolve(dirname(fileURLToPath(import.meta.url)), "./loaders/RemoveTypescriptModule.cjs")
         }
     },
     resolve: {
-        extensions: [".ts", ".js"]
+        extensions: [".ts", ".js"],
+        plugins: [ new TsconfigPathsPlugin({ configFile: "./tsconfig.json" }) ]
     },
     plugins: htmlFiles.map(
         file => new HtmlWebpackPlugin({
@@ -73,17 +73,11 @@ export default (htmlFiles) => ({
                     {
                         preset: "webp",
                         implementation: ImageMinimizerPlugin.sharpGenerate,
-                        options: {
-                            encodeOptions: {
-                                webp: {
-                                    quality: 75
-                                }
-                            }
-                        }
+                        options: { encodeOptions: { webp: { quality: 75 } } }
                     }
                 ]
             }),
-            new TerserPlugin(),
+            new TerserPlugin({ parallel: true }),
             new CssMinimizerPlugin()
         ]
     }
