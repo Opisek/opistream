@@ -9,13 +9,6 @@ import (
 	webpageService "github.com/Opisek/opistream/services/webpage"
 )
 
-func interceptHandler(h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("socket.io called")
-		h.ServeHTTP(w, r)
-	})
-}
-
 func main() {
 	// webpage
 	webpageServiceInstance := webpageService.New()
@@ -26,7 +19,7 @@ func main() {
 
 	// signaling
 	signalingServiceInstance := signalingService.New()
-	http.Handle("/socket.io/", interceptHandler(signalingServiceInstance.Server))
+	http.Handle("/socket", signalingService.HandleSocket(&signalingServiceInstance))
 
 	// start the server
 	log.Printf("Listening on port %s\n", os.Getenv("PORT"))

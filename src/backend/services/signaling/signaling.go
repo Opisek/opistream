@@ -2,38 +2,44 @@ package signalingService
 
 import (
 	"log"
-	"time"
+	"net/http"
 
-	sio "github.com/njones/socketio"
-	eio "github.com/njones/socketio/engineio"
-	eiot "github.com/njones/socketio/engineio/transport"
+	"github.com/gorilla/websocket"
 )
 
+var upgrader = websocket.Upgrader{} // use default options
+
 type signalingService struct {
-	Server *sio.ServerV4
+	upgrader websocket.Upgrader
 }
 
 func New() signalingService {
-	return signalingService{startServer()}
+	return signalingService{websocket.Upgrader{}}
 }
 
-func startServer() *sio.ServerV4 {
-	server := sio.NewServer(
-		eio.WithPingInterval(300*1*time.Millisecond),
-		eio.WithPingTimeout(200*1*time.Millisecond),
-		eio.WithMaxPayload(1000000),
-		eio.WithTransportOption(eiot.WithGovernor(1500*time.Microsecond, 500*time.Microsecond)),
-	)
+func HandleSocket(s *signalingService) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		conn, err := upgrader.Upgrade(w, r, nil)
+		if err != nil {
+			log.Printf("Error upgrading websocket connection: %s\n", err)
+			return
+		}
 
-	// use a OnConnect handler for incoming "connection" messages
-	server.OnConnect(func(socket *sio.SocketV4) error {
-		log.Printf("Socket connected!")
-		return nil
+		defer conn.Close()
+
+		err = conn.WriteMessage(websocket.TextMessage, []byte("Hello client, this is server."))
+		if err != nil {
+			log.Printf("Error writing to websocket: %s\n", err)
+			return
+		}
+
+		for {
+			_, message, err := conn.ReadMessage()
+			if err != nil {
+				log.Printf("Error reading websocket: %s\n", err)
+				return
+			}
+			log.Printf("Received message from websocket: %s", message)
+		}
 	})
-
-	server.OnDisconnect(func(reason string) {
-		log.Printf("Socket disconnected: %s", reason)
-	})
-
-	return server
 }

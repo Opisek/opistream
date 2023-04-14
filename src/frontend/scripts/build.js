@@ -19,7 +19,7 @@ import { createGzip } from "zlib";
     createEntry(htmlFiles);
 
     console.log("Downloading libraries");
-    await downloadLibraries("https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js");
+    await downloadLibraries();
 
     console.log("Running webpack");
     await runWebpack(htmlFiles);

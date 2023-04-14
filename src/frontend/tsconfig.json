@@ -8,9 +8,6 @@
         "removeComments": true,
         "strict": true,
         "baseUrl": "./",
-        "paths": {
-            "socket.io-client": [ "node_modules/socket.io-client" ]
-        },
         "moduleResolution": "node",
         "lib": ["es5", "es6", "dom"],
         "esModuleInterop": true,
