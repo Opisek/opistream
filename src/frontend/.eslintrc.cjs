@@ -27,7 +27,8 @@ module.exports = {
         "comma-spacing": ["error", {
             "before": false,
             "after": true
-        }]
+        }],
+        "@typescript-eslint/ban-ts-comment": 0
     },
-    "ignorePatterns": ["entry.js", "dist"]
+    "ignorePatterns": ["entry.js", "dist", "lib"]
 };

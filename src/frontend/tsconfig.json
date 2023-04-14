@@ -1,17 +1,18 @@
 {
     "compilerOptions": {
         "module": "es6",
-        "target": "es6",
+        "target": "es5",
         "allowJs": true,
         "noImplicitAny": true,
         "outDir": "./dist/js",
         "removeComments": true,
-        "strict": true
+        "strict": true,
+        "baseUrl": "./",
+        "moduleResolution": "node",
+        "lib": ["es5", "es6", "dom"],
+        "esModuleInterop": true,
     },
-    "incluede": [
-        "*.ts"
-    ],
-    "exclude": [
-        "node_modules"
+    "include": [
+        "js/**/*.ts"
     ]
 }

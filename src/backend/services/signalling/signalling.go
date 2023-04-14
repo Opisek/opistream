@@ -1,5 +1,0 @@
-package signallingService
-
-func startSignalingService() {
-
-}

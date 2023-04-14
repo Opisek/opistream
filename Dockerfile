@@ -27,8 +27,9 @@ RUN npm run build
 FROM golang:1.20-alpine AS backend
 # compile the server
 WORKDIR /app
-COPY src/backend .
+COPY src/backend/go.mod src/backend/go.sum ./
 RUN go mod download
+COPY src/backend .
 RUN go build -o dist/server
 
 #

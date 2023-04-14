@@ -1,28 +1,30 @@
 {
     "engines": {
-      "node": ">=16.0.0"
+        "node": ">=16.0.0"
     },
+    "type": "module",
     "devDependencies": {
-      "@typescript-eslint/eslint-plugin": "^5.57.1",
-      "@typescript-eslint/parser": "^5.57.1",
-      "critical": "^5.0.4",
-      "css-loader": "^6.7.3",
-      "css-minimizer-webpack-plugin": "^5.0.0",
-      "eslint": "^8.37.0",
-      "html-loader": "^4.2.0",
-      "html-webpack-plugin": "^5.5.0",
-      "image-minimizer-webpack-plugin": "^3.8.2",
-      "mini-css-extract-plugin": "^2.7.5",
-      "sharp": "^0.32.0",
-      "template-ejs-loader": "^0.9.4",
-      "terser-webpack-plugin": "^5.3.7",
-      "ts-loader": "^9.4.2",
-      "typescript": "^5.0.3",
-      "webpack": "^5.77.0",
-      "zlib": "^1.0.5"
+        "@types/node": "^18.15.11",
+        "@typescript-eslint/eslint-plugin": "^5.57.1",
+        "@typescript-eslint/parser": "^5.57.1",
+        "critical": "^5.0.4",
+        "css-loader": "^6.7.3",
+        "css-minimizer-webpack-plugin": "^5.0.0",
+        "eslint": "^8.37.0",
+        "html-loader": "^4.2.0",
+        "html-webpack-plugin": "^5.5.0",
+        "image-minimizer-webpack-plugin": "^3.8.2",
+        "mini-css-extract-plugin": "^2.7.5",
+        "sharp": "^0.32.0",
+        "template-ejs-loader": "^0.9.4",
+        "terser-webpack-plugin": "^5.3.7",
+        "ts-loader": "^9.4.2",
+        "tsconfig-paths-webpack-plugin": "^4.0.1",
+        "typescript": "^5.0.3",
+        "webpack": "^5.78.0",
+        "zlib": "^1.0.5"
     },
     "scripts": {
-      "build": "node scripts/build"
-    },
-    "type": "module"
-  }
+        "build": "node scripts/build"
+    }
+}

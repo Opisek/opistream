@@ -12,31 +12,30 @@ import (
 // Data Types
 //
 
-type Redirect struct {
-	Pages []string
-	Url   string
+type webpageService struct {
+	htmlFilesMap         map[string]bool
+	defaultCacheDuration int
+}
+
+func New() webpageService {
+	return webpageService{getHtmlFilesMap(), 60 * 60 * 24 * 365}
 }
 
 //
-// Main
+// Handlers
 //
 
-func StartWebpageService() {
-	// get data we need
-	htmlFilesMap := getHtmlFilesMap()
-
-	// handle static resources
-	oneYear := 60 * 60 * 24 * 365
-	http.Handle("/css/", handleCache(oneYear, handleCompression("text/css", http.StripPrefix("/css/", http.FileServer(http.Dir("public/css"))))))
-	http.Handle("/js/", handleCache(oneYear, handleCompression("text/javascript", http.StripPrefix("/js/", http.FileServer(http.Dir("public/js"))))))
-	http.Handle("/images/", handleCache(oneYear, http.StripPrefix("/images/", http.FileServer(http.Dir("public/images")))))
-
-	// handle views and redirects
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { handleView(w, r, &htmlFilesMap) })
-
-	// start the server
-	fmt.Println("Listening on port " + os.Getenv("PORT"))
-	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+func HandleCss(s *webpageService) http.Handler {
+	return handleCache(s.defaultCacheDuration, handleCompression("text/css", http.StripPrefix("/css/", http.FileServer(http.Dir("public/css")))))
+}
+func HandleJs(s *webpageService) http.Handler {
+	return handleCache(s.defaultCacheDuration, handleCompression("text/javascript", http.StripPrefix("/js/", http.FileServer(http.Dir("public/js")))))
+}
+func HandleImg(s *webpageService) http.Handler {
+	return handleCache(s.defaultCacheDuration, http.StripPrefix("/images/", http.FileServer(http.Dir("public/img"))))
+}
+func HandleHtml(s *webpageService) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { handleView(w, r, s) })
 }
 
 //
@@ -115,13 +114,13 @@ func handleCompression(contentType string, h http.Handler) http.Handler {
 	})
 }
 
-func handleView(w http.ResponseWriter, r *http.Request, htmlFilesMap *map[string]bool) {
+func handleView(w http.ResponseWriter, r *http.Request, s *webpageService) {
 	// get the requested filename
 	path := r.URL.Path[1:]
 	if path == "" {
 		path = "index"
 	}
-	if !(*htmlFilesMap)[path+".html"] {
+	if !(s.htmlFilesMap)[path+".html"] {
 		path = "404"
 	}
 
