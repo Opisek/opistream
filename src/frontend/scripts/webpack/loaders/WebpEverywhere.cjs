@@ -1,4 +1,4 @@
-module.exports = source => [...source.matchAll(/(?:'|")((?:\.{0,2}\/)[^'"]+\.(?:png|jpe?g|webp|gif|svg|))(?!(?:\?|&)as=)(\?[^'"]*)?(?:'|")/g)]
+module.exports = source => [ ...source.matchAll(/(?:'|")((?:\.{0,2}\/)[^'"]+\.(?:png|jpe?g|webp|gif|svg|))(?!(?:\?|&)as=)(\?[^'"]*)?(?:'|")/g) ]
     .reduce(
         (modifiedSource, match) => modifiedSource.replaceAll(
             match[0],

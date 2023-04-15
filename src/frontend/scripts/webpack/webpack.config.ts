@@ -1,6 +1,8 @@
 import { join, parse, dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
+import webpack from "webpack";
+
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ImageMinimizerPlugin from "image-minimizer-webpack-plugin";
 import TerserPlugin from "terser-webpack-plugin";
@@ -9,7 +11,7 @@ import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 
 import { rootDir, distDir, htmlDir } from "../paths.js";
 
-export default (htmlFiles) => ({
+export default (htmlFiles: string[]): webpack.Configuration => ({
     mode: "production",
     entry: join(rootDir, "entry.js"),
     output: {
@@ -21,7 +23,7 @@ export default (htmlFiles) => ({
         rules: [
             {
                 test: /\.ejs$/i,
-                use: ["html-loader", "webp-everywhere", "template-ejs-loader"]
+                use: [ "html-loader", "webp-everywhere", "template-ejs-loader" ]
             },
             {
                 test: /\.css$/i,
@@ -55,7 +57,7 @@ export default (htmlFiles) => ({
         }
     },
     resolve: {
-        extensions: [".ts", ".js"],
+        extensions: [ ".ts", ".js" ],
         plugins: [ new TsconfigPathsPlugin({ configFile: "./tsconfig.json" }) ]
     },
     plugins: htmlFiles.map(
@@ -73,7 +75,7 @@ export default (htmlFiles) => ({
                     {
                         preset: "webp",
                         implementation: ImageMinimizerPlugin.sharpGenerate,
-                        options: { encodeOptions: { webp: { quality: 75 } } }
+                        options: { encodeOptions: { webp: { quality: 75 }}}
                     }
                 ]
             }),

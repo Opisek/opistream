@@ -16,19 +16,33 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
-        "indent": [ "error", 4 ],
+        "indent": [ "error", 4, {
+            "SwitchCase": 1
+        }],
         "linebreak-style": [ "error", "unix" ],
         "quotes": [ "error", "double" ],
         "semi": [ "error", "always" ],
-        "no-multi-spaces": ["error"],
+        "no-multi-spaces": [ "error" ],
         "no-var": 0,
-        "comma-dangle": ["error", "never"],
-        "eol-last": ["error", "never"],
-        "comma-spacing": ["error", {
+        "comma-dangle": [ "error", "never" ],
+        "eol-last": [ "error", "never" ],
+        "comma-spacing": [ "error", {
             "before": false,
             "after": true
         }],
-        "@typescript-eslint/ban-ts-comment": 0
+        "@typescript-eslint/ban-ts-comment": 0,
+        "array-bracket-spacing": [ "error", "always", {
+            "objectsInArrays": false,
+            "arraysInArrays": false
+        }],
+        "arrow-parens": [ "error", "as-needed" ],
+        "keyword-spacing": [ "error", {
+            "before": true,
+            "after": true
+        }],
+        "object-curly-spacing": [ "error", "always", {
+            "objectsInObjects": false
+        }]
     },
-    "ignorePatterns": ["entry.js", "dist", "lib"]
+    "ignorePatterns": [ "entry.js", "dist", "lib" ]
 };
