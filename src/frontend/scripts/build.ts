@@ -3,10 +3,11 @@ import { extname, join, parse } from "path";
 import { get } from "https";
 
 import webpack from "webpack";
+//@ts-ignore
 import { generate } from "critical";
 
 import { cssDistDir, distDir, htmlDir, htmlDistDir, jsDistDir, jsLibDir, rootDir } from "./paths.js";
-import webpackConfig from "./webpack/webpack.config.js";
+import webpackConfig from "./webpack/webpack.config";
 import { createGzip } from "zlib";
 
 (async () => {
@@ -33,20 +34,20 @@ import { createGzip } from "zlib";
     await inlineCriticalCss(htmlFiles);
     
     console.log("Compressing files");
-    compressFiles(htmlDistDir, [".html"]);
-    compressFiles(cssDistDir, [".css"]);
-    compressFiles(jsDistDir, [".js"]);
+    compressFiles(htmlDistDir, [ ".html" ]);
+    compressFiles(cssDistDir, [ ".css" ]);
+    compressFiles(jsDistDir, [ ".js" ]);
 
     console.log("Cleaning up");
     cleanup();
 })();
 
-function downloadLibraries(...files) {
+function downloadLibraries(...files: string[]) {
     rmSync(jsLibDir, { recursive: true, force: true });
     mkdirSync(jsLibDir);
 
     return Promise.all(
-        files.map(url => new Promise((resolve, reject) => {
+        files.map(url => new Promise<void>((resolve, reject) => {
             console.log(`Downloading ${url}`);
 
             const parts = url.split("/");
@@ -69,15 +70,15 @@ function downloadLibraries(...files) {
     );
 }
 
-function createEntry(htmlFiles) {
+function createEntry(htmlFiles: string[]) {
     writeFileSync(
         join(rootDir, "entry.js"),
         htmlFiles.map(file => `require("${join(htmlDir, file)}");`).reduce((accumulator, current) => accumulator + current)
     );
 }
 
-async function runWebpack(htmlFiles) {
-    const [webpackError, webpackStats] = await new Promise(res => webpack(webpackConfig(htmlFiles), (error, stats) => res([error, stats])));
+async function runWebpack(htmlFiles: string[]) {
+    const [ webpackError, webpackStats ] = await new Promise(res => webpack(webpackConfig(htmlFiles), (error, stats) => res([ error, stats ]))) as [ Error, webpack.Stats ];
     if (webpackError) console.error(`Webpack Errors:\n${webpackError}`);
     if (webpackStats.hasWarnings()) console.error(webpackStats.toJson().warnings);
     if (webpackStats.hasErrors()) console.error(webpackStats.toJson().errors);
@@ -88,12 +89,12 @@ function cleanup() {
     rmSync(join(rootDir, "entry.js"));
 }
 
-function replaceInFiles(files, match, replacement) {
+function replaceInFiles(files: string[], match: string | RegExp, replacement: string) {
     return Promise.all(
-        files.map(file => new Promise((resolve, reject) => {
+        files.map(file => new Promise<void>((resolve, reject) => {
             try {
-                writeFileSync(file, readFileSync(file, {encoding:"utf8"}).replaceAll(match, replacement));
-            } catch(e) {
+                writeFileSync(file, readFileSync(file, { encoding:"utf8" }).replaceAll(match, replacement));
+            } catch (e) {
                 reject(`Error removing "${match}" from "${file}":\n${e}`);
             }
             resolve();
@@ -101,11 +102,11 @@ function replaceInFiles(files, match, replacement) {
     );
 }
 
-function removeBundle(files) {
+function removeBundle(files: string[]) {
     return replaceInFiles(files, /<script[^>]+src="..\/bundle\.js"[^>]*(?:\/>|><\/script>)/g, "");
 }
 
-function inlineCriticalCss(htmlFiles) {
+function inlineCriticalCss(htmlFiles: string[]) {
     return Promise.all(
         htmlFiles.map(file => generate({
             base: distDir,
@@ -131,7 +132,7 @@ function inlineCriticalCss(htmlFiles) {
     );
 }
 
-async function compressFiles(directory, extensions) {
+async function compressFiles(directory: string, extensions: string[]) {
     if (!existsSync(directory)) return;
     const files = readdirSync(directory);
     return Promise.all(

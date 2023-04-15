@@ -3,3 +3,4 @@ dist
 entry.js
 package-lock.json
 lib
+build

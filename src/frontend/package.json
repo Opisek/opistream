@@ -25,6 +25,6 @@
         "zlib": "^1.0.5"
     },
     "scripts": {
-        "build": "node scripts/build"
+        "build": "cd scripts && tsc && cp -R webpack/loaders ../build/webpack/ && node --experimental-specifier-resolution=node ../build/build"
     }
 }

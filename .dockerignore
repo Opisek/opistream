@@ -5,3 +5,4 @@ src/frontend/entry.js
 **/package-lock.json
 **/dist
 **/lib
+**/build
