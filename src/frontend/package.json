@@ -7,7 +7,7 @@
         "@types/node": "^18.15.11",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
-        "critical": "^5.0.4",
+        "critical": "^5.1.1",
         "css-loader": "^6.7.3",
         "css-minimizer-webpack-plugin": "^5.0.0",
         "eslint": "^8.37.0",
@@ -15,6 +15,8 @@
         "html-webpack-plugin": "^5.5.0",
         "image-minimizer-webpack-plugin": "^3.8.2",
         "mini-css-extract-plugin": "^2.7.5",
+        "sass": "^1.62.0",
+        "sass-loader": "^13.2.2",
         "sharp": "^0.32.0",
         "template-ejs-loader": "^0.9.4",
         "terser-webpack-plugin": "^5.3.7",
@@ -25,6 +27,6 @@
         "zlib": "^1.0.5"
     },
     "scripts": {
-        "build": "cd scripts && tsc && cp -R webpack/loaders ../build/webpack/ && node --experimental-specifier-resolution=node ../build/build"
+        "build": "cd scripts && tsc && cp -R webpack/loaders ../build/webpack/ && node ../build/build"
     }
 }

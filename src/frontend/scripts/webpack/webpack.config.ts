@@ -31,6 +31,12 @@ export default (htmlFiles: string[]): webpack.Configuration => ({
                 generator : { filename : "css/[contenthash][ext]" }
             },
             {
+                test: /\.s[ac]ss$/i,
+                type: "asset/resource",
+                use: "sass-loader",
+                generator : { filename : "css/[contenthash].css" }
+            },
+            {
                 test: /\.js$/i,
                 exclude: [ /node_modules/, /entry\.js$/ ],
                 type: "asset/resource",
