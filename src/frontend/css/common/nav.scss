@@ -1,0 +1,34 @@
+@use "../modules/colors.scss";
+@use "../modules/dimensions.scss";
+@import "../common/style.scss";
+
+nav {
+    @extend .row;
+
+    height: dimensions.$navHeight;
+    width: 100%;
+    margin-top: dimensions.$navHeight * -1;
+    position: fixed;
+    padding: 0 dimensions.$paddingSmall;
+
+    background-color: colors.$nav;
+    color: colors.$navText;
+
+    div {
+        @extend .row;
+        flex-grow: 1;
+        line-height: dimensions.$navHeight;
+
+        button {
+            border-radius: 0;
+            padding: 0 dimensions.$padding;
+
+            background-color: transparent;
+            color: currentColor
+        }
+    }
+
+    > div:last-child {
+        justify-content: flex-end;
+    }
+}

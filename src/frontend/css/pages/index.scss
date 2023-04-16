@@ -1,0 +1,12 @@
+main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 50% auto;
+    grid-template-areas: "video" "controls";
+}
+
+video {
+    background-color: black;
+    grid-area: video;
+    width: 100%;
+    height: 100%;
+}

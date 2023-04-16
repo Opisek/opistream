@@ -1,0 +1,38 @@
+@use "../modules/colors.scss";
+@use "../modules/dimensions.scss";
+
+button, input {
+    border: 0;
+    appearance: none;
+    outline: 0;
+
+    background-color: colors.$backgroundLight;
+    color: colors.$backgroundText;
+
+    text-align: center;
+    font-size: dimensions.$font;
+
+    padding: dimensions.$paddingSmall dimensions.$padding;
+    border-radius: dimensions.$borderRadius;
+
+    cursor: pointer;
+
+    &.primary {
+        background-color: colors.$primary;
+        color: colors.$primaryText;
+
+        &:hover {
+            background-color: colors.$primaryFocus;
+        }
+    }
+
+    &:hover {
+        background-color: colors.$backgroundLightFocus
+    }
+}
+
+input {
+    &:focus {
+        background-color: colors.$backgroundLightFocus
+    }
+}

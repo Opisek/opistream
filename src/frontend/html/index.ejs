@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <%- include('../partials/commonHead.html') %>
+    <%- include("../partials/commonHead.html") %>
+    <%- include("../partials/navbarHead.html") %>
+    <link rel="stylesheet" href="../css/pages/index.scss">
     <title>OpiStream</title>
 </head>
 <body>
-    <div class="column">
-        <span>Welcome to OpiStream</span>
+    <%- include("../partials/navbarBody.html") %>
+    <main>
         <video id="video" controls></video>
-        <button id="streamButton">Stream</button>
-        <input type="text" id="tokenField" placeholder="Token">
-    </div>
+        <div>
+            <button id="streamButton">Stream</button>
+            <input type="text" id="tokenField" placeholder="Token">
+        </div>
+    </main>
 </body>
 </html>
