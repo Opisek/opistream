@@ -31,7 +31,7 @@ import { createGzip } from "zlib";
     await removeBundle(htmlFiles);
 
     console.log("Inlining critical CSS");
-    await inlineCriticalCss(htmlFiles);
+    //await inlineCriticalCss(htmlFiles);
     
     console.log("Compressing files");
     compressFiles(htmlDistDir, [ ".html" ]);
