@@ -1,8 +1,12 @@
+@import "../dimensions/default.scss";
+
 div.column {
     display: flex;
     flex-direction: column;
+    gap: $gap;
 }
 
 video {
-    height: 50vw;
+    max-height: 50vh;
+    background-color: black;
 }
