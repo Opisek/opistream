@@ -1,4 +1,4 @@
-package signalingService
+package signaling
 
 import (
 	"log"
@@ -9,15 +9,15 @@ import (
 
 var upgrader = websocket.Upgrader{} // use default options
 
-type signalingService struct {
+type SignalingService struct {
 	upgrader websocket.Upgrader
 }
 
-func New() signalingService {
-	return signalingService{websocket.Upgrader{}}
+func New() SignalingService {
+	return SignalingService{websocket.Upgrader{}}
 }
 
-func HandleSocket(s *signalingService) http.Handler {
+func HandleSocket(s *SignalingService) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		conn, err := upgrader.Upgrade(w, r, nil)
 		if err != nil {

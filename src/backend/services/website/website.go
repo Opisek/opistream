@@ -1,4 +1,4 @@
-package webpageService
+package website
 
 import (
 	"fmt"
@@ -12,29 +12,29 @@ import (
 // Data Types
 //
 
-type webpageService struct {
+type WebsiteService struct {
 	htmlFilesMap         map[string]bool
 	defaultCacheDuration int
 }
 
-func New() webpageService {
-	return webpageService{getHtmlFilesMap(), 60 * 60 * 24 * 365}
+func New() WebsiteService {
+	return WebsiteService{getHtmlFilesMap(), 60 * 60 * 24 * 365}
 }
 
 //
 // Handlers
 //
 
-func HandleCss(s *webpageService) http.Handler {
+func HandleCss(s *WebsiteService) http.Handler {
 	return handleCache(s.defaultCacheDuration, handleCompression("text/css", http.StripPrefix("/css/", http.FileServer(http.Dir("public/css")))))
 }
-func HandleJs(s *webpageService) http.Handler {
+func HandleJs(s *WebsiteService) http.Handler {
 	return handleCache(s.defaultCacheDuration, handleCompression("text/javascript", http.StripPrefix("/js/", http.FileServer(http.Dir("public/js")))))
 }
-func HandleImg(s *webpageService) http.Handler {
+func HandleImg(s *WebsiteService) http.Handler {
 	return handleCache(s.defaultCacheDuration, http.StripPrefix("/images/", http.FileServer(http.Dir("public/img"))))
 }
-func HandleHtml(s *webpageService) http.Handler {
+func HandleHtml(s *WebsiteService) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { handleView(w, r, s) })
 }
 
@@ -114,7 +114,7 @@ func handleCompression(contentType string, h http.Handler) http.Handler {
 	})
 }
 
-func handleView(w http.ResponseWriter, r *http.Request, s *webpageService) {
+func handleView(w http.ResponseWriter, r *http.Request, s *WebsiteService) {
 	// get the requested filename
 	path := r.URL.Path[1:]
 	if path == "" {

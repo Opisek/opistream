@@ -5,21 +5,24 @@ import (
 	"net/http"
 	"os"
 
-	signalingService "github.com/Opisek/opistream/services/signaling"
-	webpageService "github.com/Opisek/opistream/services/webpage"
+	"github.com/Opisek/opistream/services/signaling"
+	"github.com/Opisek/opistream/services/website"
 )
 
 func main() {
-	// webpage
-	webpageServiceInstance := webpageService.New()
-	http.Handle("/css/", webpageService.HandleCss(&webpageServiceInstance))
-	http.Handle("/js/", webpageService.HandleJs(&webpageServiceInstance))
-	http.Handle("/img/", webpageService.HandleImg(&webpageServiceInstance))
-	http.Handle("/", webpageService.HandleHtml(&webpageServiceInstance))
+	// authentication
+	//authenticationService := authentication.New()
+
+	// website
+	websiteService := website.New()
+	http.Handle("/css/", website.HandleCss(&websiteService))
+	http.Handle("/js/", website.HandleJs(&websiteService))
+	http.Handle("/img/", website.HandleImg(&websiteService))
+	http.Handle("/", website.HandleHtml(&websiteService))
 
 	// signaling
-	signalingServiceInstance := signalingService.New()
-	http.Handle("/socket", signalingService.HandleSocket(&signalingServiceInstance))
+	signalingService := signaling.New()
+	http.Handle("/socket", signaling.HandleSocket(&signalingService))
 
 	// start the server
 	log.Printf("Listening on port %s\n", os.Getenv("PORT"))
