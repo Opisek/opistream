@@ -4,7 +4,8 @@
 
 * { 
     box-sizing: border-box;
-    transition: dimensions.$animation
+    transition: color dimensions.$animation;
+    transition: background-color dimensions.$animation;
 }
 
 html {
@@ -56,6 +57,10 @@ h1 {
 .row {
     @extend .flex;
     flex-direction: row;
+
+    @media screen and (max-width: dimensions.$screenWidthMobile) {
+        flex-direction: column;
+    }
 }
 
 .container {

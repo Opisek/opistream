@@ -17,4 +17,11 @@ video {
     line-height: dimensions.$navHeight;
     justify-content: space-between;
     background-color: colors.$backgroundDark;
+
+    @media screen and (max-width: dimensions.$screenWidthMobile) {
+        height: auto;
+        line-height: normal;
+        padding-top: dimensions.$paddingSmall;
+        padding-bottom: dimensions.$paddingSmall;
+    }
 }
