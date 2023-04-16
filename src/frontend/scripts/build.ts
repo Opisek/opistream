@@ -7,7 +7,7 @@ import webpack from "webpack";
 import { generate } from "critical";
 
 import { cssDistDir, distDir, htmlDir, htmlDistDir, jsDistDir, jsLibDir, rootDir } from "./paths.js";
-import webpackConfig from "./webpack/webpack.config";
+import webpackConfig from "./webpack/webpack.config.js";
 import { createGzip } from "zlib";
 
 (async () => {
@@ -114,14 +114,10 @@ function inlineCriticalCss(htmlFiles: string[]) {
             target: file,
             inline: true,
             inlineImages: true,
-            dimensions: [ // https://www.browserstack.com/guide/ideal-screen-sizes-for-responsive-design
+            dimensions: [
                 {
                     width: 1920,
                     height: 1080
-                },
-                {
-                    width: 1366,
-                    height: 768 
                 },
                 {
                     width: 360,
