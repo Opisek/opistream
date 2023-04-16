@@ -4,6 +4,10 @@
 main {
     grid-template-rows: 50% auto;
     justify-content: initial;
+
+    @media screen and (max-width: dimensions.$screenWidthMobile) {
+        grid-template-rows: auto auto;
+    }
 }
 
 video {
