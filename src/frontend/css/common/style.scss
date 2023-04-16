@@ -32,12 +32,14 @@ main {
 
     width: 100%;
     height: 100%;
+
+    justify-content: center;
 }
 
 h1 {
     font-family: 'Crete Round', serif;
     font-size: dimensions.$fontTitle;
-    font-weight: 700;
+    font-weight: dimensions.$fontTitleWeight;
     margin: 0;
 }
 
@@ -54,4 +56,17 @@ h1 {
 .row {
     @extend .flex;
     flex-direction: row;
+}
+
+.container {
+    padding: dimensions.$paddingSmall dimensions.$padding;
+}
+
+.sidePadding {
+    padding-left: dimensions.$padding;
+    padding-right: dimensions.$padding;
+}
+
+.noGap {
+    gap: 0;
 }

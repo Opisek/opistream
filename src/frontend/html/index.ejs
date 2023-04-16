@@ -8,11 +8,17 @@
 </head>
 <body>
     <%- include("../partials/navbarBody.html") %>
-    <main>
+    <main class="noGap">
         <video id="video" controls></video>
-        <div>
-            <button id="streamButton">Stream</button>
-            <input type="text" id="tokenField" placeholder="Token">
+        <div class="column noGap">
+            <div class="videoInfoBar row sidePadding">
+                <h1 id="streamTitle">Opisek streaming VALORANT</h1>
+                <span id="viewerCount">3 Viewers</span>
+            </div>
+            <div class="container">
+                <button id="streamButton">Stream</button>
+                <input type="text" id="tokenField" placeholder="Token">
+            </div>
         </div>
     </main>
 </body>
