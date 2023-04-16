@@ -44,5 +44,5 @@ module.exports = {
             "objectsInObjects": false
         }]
     },
-    "ignorePatterns": [ "entry.js", "dist", "lib" ]
+    "ignorePatterns": [ "entry.js", "dist", "lib", "build" ]
 };
