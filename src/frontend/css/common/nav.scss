@@ -1,9 +1,10 @@
 @use "../modules/colors.scss";
 @use "../modules/dimensions.scss";
-@import "../common/style.scss";
 
 nav {
-    @extend .row;
+    display: flex; 
+    gap: dimensions.$gap;
+    flex-direction: row;
 
     height: dimensions.$navHeight;
     width: 100%;
@@ -15,7 +16,10 @@ nav {
     color: colors.$navText;
 
     div {
-        @extend .row;
+        display: flex; 
+        gap: dimensions.$gap;
+        flex-direction: row;
+    
         flex-grow: 1;
         line-height: dimensions.$navHeight;
 
